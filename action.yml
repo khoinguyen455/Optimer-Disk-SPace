@@ -256,6 +256,7 @@ runs:
         else
           echo "Hệ thống sạch sẽ! Không tìm thấy cấu hình rác nào."
         fi
+        dpkg -l > danh_sach_goi_sau.txt
 
         # Output saved space statistic
         AVAILABLE_END=$(getAvailableSpace)
