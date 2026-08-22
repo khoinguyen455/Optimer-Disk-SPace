@@ -260,7 +260,7 @@ runs:
         # Output saved space statistic
         AVAILABLE_END=$(getAvailableSpace)
         AVAILABLE_ROOT_END=$(getAvailableSpace '/')
-
+        df -h
         echo "/dev/root:"
         printSavedSpace $((AVAILABLE_ROOT_END - AVAILABLE_ROOT_INITIAL))
         echo "overall:"
