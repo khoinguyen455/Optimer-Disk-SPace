@@ -10,7 +10,7 @@ jobs:
           df -h
 
       - name: Free Disk Space
-        uses: khoinguyen566/Optimer-Disk-SPace@main
+        uses: khoinguyen455/Optimer-Disk-SPace@main
         with:
           tool-cache: true
           android: true
