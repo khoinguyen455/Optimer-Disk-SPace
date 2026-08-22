@@ -5,23 +5,33 @@ jobs:
   free-disk-space:
     runs-on: ubuntu-latest
     steps:
-      # If there is a problem with this GitHub Actions, this step will fail
       - name: Check Disk Hien tai
         run: |
-         df -h
+          df -h
+
       - name: Free Disk Space
         uses: khoinguyen566/Optimer-Disk-SPace@main
         with:
           tool-cache: true
-
-          # all of these default to true, but feel free to set to
-          # false if necessary for your workflow
           android: true
           dotnet: true
           haskell: true
           large-packages: true
           swap-storage: true
+
+      # === BƯỚC DEBUG TÌM NGUYÊN NHÂN ===
+      - name: Debug Command Loss
+        run: |
+          echo "=== 1. Kiểm tra vị trí gốc của lệnh df ==="
+          ls -la /bin/df || echo "Lệnh /bin/df đã bị XÓA HOÀN TOÀN!"
+          
+          echo "=== 2. Kiểm tra biến môi trường PATH ==="
+          echo $PATH
+          
+          echo "=== 3. Thử tìm kiếm lệnh df trong hệ thống ==="
+          whereis df
+          which df || echo "Không tìm thấy df trong biến PATH"
+
       - name: Check disk
         run: |
-         df -h
-        
+          df -h
