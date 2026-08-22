@@ -18,6 +18,9 @@ jobs:
           haskell: true
           large-packages: true
           swap-storage: true
+      - name: Xem danh sach goi sau khi toi uu
+        run: |
+          cat danh_sach_goi_sau.txt
 
       # === BƯỚC DEBUG TÌM NGUYÊN NHÂN ===
       - name: Debug Command Loss
