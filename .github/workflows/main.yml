@@ -18,23 +18,6 @@ jobs:
           haskell: true
           large-packages: true
           swap-storage: true
-      - name: Xem danh sach goi sau khi toi uu
-        run: |
-          cat danh_sach_goi_sau.txt
-
-      # === BƯỚC DEBUG TÌM NGUYÊN NHÂN ===
-      - name: Debug Command Loss
-        run: |
-          echo "=== 1. Kiểm tra vị trí gốc của lệnh df ==="
-          ls -la /bin/df || echo "Lệnh /bin/df đã bị XÓA HOÀN TOÀN!"
-          
-          echo "=== 2. Kiểm tra biến môi trường PATH ==="
-          echo $PATH
-          
-          echo "=== 3. Thử tìm kiếm lệnh df trong hệ thống ==="
-          whereis df
-          which df || echo "Không tìm thấy df trong biến PATH"
-
       - name: Check disk
         run: |
           df -h
