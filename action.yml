@@ -149,7 +149,7 @@ runs:
           sudo rm -rf /opt/actionarchivecache
           
           echo "==> Bắt đầu gỡ bỏ các gói hệ thống nặng mới bổ sung..."
-          sudo apt-get purge -y openjdk-21-jre-headless openjdk-21-jdk-headless || true.
+          sudo apt-get purge -y openjdk-21-jre-headless openjdk-21-jdk-headless || true
           sudo apt-get purge -y \
             microsoft-edge-stable \
             azure-cli \
