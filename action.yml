@@ -195,10 +195,6 @@ runs:
           sudo rm -rf /home/runner/.rustup
           sudo rm -rf /home/packer/.rustup
           sudo rm -rf /etc/skel/.rustup
-
-          echo "==> Xóa các file nén bộ nhớ đệm của Actions Runner..."
-          sudo rm -rf /opt/runner-cache/actions-runner-linux-x64-*.tar.gz
-
           echo "==> Xóa các công cụ DevOps nặng trong /usr/local/bin..."
           sudo rm -f /usr/local/bin/minikube
           sudo rm -f /usr/local/bin/pulumi
@@ -244,15 +240,37 @@ runs:
           SAVED=$((AFTER-BEFORE))
           printSavedSpace $SAVED "Swap storage"
         fi
-        sudo rm -rf /home/linuxbrew/.linuxbrew
-        sudo rm -rf /usr/local/share/vcpkg
-        sudo rm -rf /home/runner/actions-runner/cached
-        sudo rm -rf /opt/runner-cache/externals
-        # Output saved space statistic
         AVAILABLE_END=$(getAvailableSpace)
-        AVAILABLE_ROOT_END=$(getAvailableSpace '/')
-        df -h
-        echo "/dev/root:"
-        printSavedSpace $((AVAILABLE_ROOT_END - AVAILABLE_ROOT_INITIAL))
         echo "overall:"
         printSavedSpace $((AVAILABLE_END - AVAILABLE_INITIAL))
+        cat << 'EOF' > CleanSpace.sh
+        #!/bin/bash
+        
+        # Kiểm tra quyền root
+        if [ "$EUID" -ne 0 ]; then
+            echo "⚠️ Vui lòng chạy script này bằng quyền sudo: sudo ./CleanSpace.sh"
+            exit 1
+        fi
+        
+        # 1. Xóa Homebrew
+        if [ -d "/home/linuxbrew/.linuxbrew" ]; then
+            rm -rf /home/linuxbrew/.linuxbrew
+        fi
+        
+        # 2. Xóa Vcpkg
+        if [ -d "/usr/local/share/vcpkg" ]; then
+            rm -rf /usr/local/share/vcpkg
+        fi
+        
+        # 3. Xóa bộ nhớ đệm GitHub Actions Runner
+        if [ -d "/home/runner/actions-runner/cached" ]; then
+            rm -rf /home/runner/actions-runner/cached
+        fi
+        
+        # 4. Xóa bộ nhớ đệm mở rộng của Runner
+        if [ -d "/opt/runner-cache/externals" ]; then
+            rm -rf /opt/runner-cache/externals
+        fi
+        EOF
+        
+        chmod +x CleanSpace.sh
