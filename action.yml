@@ -136,6 +136,8 @@ runs:
           sudo apt-get remove -y google-cloud-sdk --fix-missing || echo "::debug::Gỡ google-cloud-sdk thất bại."
           sudo apt-get remove -y google-cloud-cli --fix-missing || echo "::debug::Gỡ google-cloud-cli thất bại."
           sudo apt-get remove -y mono-devel libgl1-mesa-dri --fix-missing || echo "::warning::Gỡ mono/mesa thất bại."
+          sudo apt-get purge -y default-jdk default-jre openjdk* gradle kotlin maven
+
           
           echo "==> Xoá các file còn sót"
           sudo swapoff -a || true
@@ -147,7 +149,7 @@ runs:
           sudo rm -rf /usr/local/aws-cli
           sudo rm -rf /usr/share/az_*
           sudo rm -rf /opt/actionarchivecache
-          
+          sudo rm -rf /usr/local/julia*
           echo "==> Bắt đầu gỡ bỏ các gói hệ thống nặng mới bổ sung..."
           sudo apt-get purge -y openjdk-21-jre-headless openjdk-21-jdk-headless || true
           sudo apt-get purge -y \
